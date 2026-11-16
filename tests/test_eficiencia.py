@@ -12,8 +12,9 @@ Protocolo (guía Sumativa 2, Figura 4):
 Los umbrales están calibrados con los resultados reales del notebook F3:
   - Comparación 1 (apply vs. vectorizada): con Python 3.14 y 25 880 filas los
     tiempos son similares (apply ≈20 ms, vectorizada ≈32 ms). La diferencia
-    real entre ambas está en la memoria: la vectorizada usa ≤10 % más que apply,
-    y en escala (millones de filas) la brecha de tiempo sí se hace significativa.
+    real entre ambas está en la memoria: la vectorizada usa ≤10 % más que apply.
+    Con más volumen la vectorizada tampoco gana en tiempo: los montos son texto y
+    el trabajo por celda es el mismo (medido con datos sintéticos de hasta 200 000 órdenes).
     El test verifica equivalencia, umbral de memoria individual (<10 MiB) y
     que la vectorizada no supera en memoria a apply por más de un 10 %.
   - Comparación 2 (iterrows vs. groupby): groupby es al menos 50× más
@@ -133,7 +134,7 @@ class TestComp1ApplyVsVectorizado:
         decisiva entre ambas versiones no es el tiempo sino la memoria: la vectorizada
         trabaja sobre arrays NumPy contiguos sin construir objetos Python por fila,
         por lo que su pico de memoria es menor o igual al de apply.
-        A mayor escala (millones de filas), la vectorizada también gana en tiempo.
+        A mayor escala la vectorizada tampoco gana en tiempo: los montos son texto.
         """
         _, mem_apply = _medir(_parse_amount_apply,       montos_texto)
         _, mem_vect  = _medir(_parse_amount_vectorizado, montos_texto)
