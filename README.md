@@ -115,6 +115,7 @@ jupyter lab F3/F3_Nucleo.ipynb   # solo el notebook de la Fase 3, después de ha
 | `transformers.py` | Pasos que aprenden de los datos (clases con `fit` y `transform`) |
 | `flujo.py` | Pipeline que encadena los pasos |
 | `sinteticos.py` | Generador de datos sintéticos para pruebas |
+| `medicion.py` | Medición de eficiencia: cada operación contra su versión fila por fila |
 | `config.py` | Rutas y parámetros compartidos |
 
 ## Datos sintéticos para probar e iterar
@@ -136,6 +137,22 @@ python scripts/make_synthetic_data.py --orders 50000      # archivos en data/ext
 ```
 
 En las pruebas están disponibles como `synthetic_lines` y `synthetic_raw_dir` (`tests/conftest.py`). Los RUT inventados usan rangos que no están asignados a nadie.
+
+### Medir la eficiencia con otros volúmenes
+
+`src/pipeline/medicion.py` compara cada operación del pipeline con una versión fila por fila. Primero comprueba que ambas dan el mismo resultado y después mide el tiempo (`timeit`, se conserva el mínimo de 7 repeticiones) y la memoria máxima (`tracemalloc`).
+
+```bash
+python scripts/measure_efficiency.py --orders 10000 50000 200000
+```
+
+```python
+from pipeline import medicion, sinteticos
+
+table = medicion.compare(sinteticos.make_order_lines(orders=10_000))
+```
+
+La columna `aceleracion` dice cuántas veces más rápida es la versión del pipeline; bajo 1, es más lenta. Los tiempos dependen de la máquina: lo que se compara es la razón entre versiones.
 
 ## Pruebas
 
