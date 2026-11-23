@@ -1,12 +1,62 @@
 # Sumativa 3 · Plan y reparto de tareas (Grupo 5)
 
-_Escrito el viernes 2026-11-20, con `main` en `78f1c99`. Es una propuesta: los nombres y las horas los confirma el grupo._
+_Escrito el viernes 2026-11-20 y actualizado el lunes 2026-11-23 con el nuevo plazo y la retroalimentación de la Sumativa 2. Es una propuesta: los nombres y las horas los confirma el grupo._
+
+## Actualización del lunes 23-nov
+
+Lo que sigue reemplaza al calendario y ajusta el reparto de más abajo.
+
+### Qué cambió
+
+- **Nuevo plazo: miércoles 25-nov, 23:59** (anuncio del docente del 20-nov).
+- **Llegó la retroalimentación de la Sumativa 2.** Los descuentos fueron en preprocesamiento, eficiencia y notebook; el detalle está en la tabla de pendientes.
+- **`main` no tiene todavía nada de la Fase 4:** el último commit de Felipe y de Cristián es del 17-nov.
+- **Ramas y *pull request* siempre.** El docente observó que los cambios del 20-nov se subieron directo a `main`. En la Fase 4 cada integrante trabaja en su rama y la integra con un *pull request* que revisa otro.
+
+### Pendientes de la Fase 3 que la rúbrica de la Fase 4 vuelve a evaluar
+
+| Pendiente | Dónde | Estado | Quién |
+|---|---|---|---|
+| Medir sobre tamaños crecientes | `escalamiento.py`, `F3/F3_escalamiento.ipynb` | Hecho el 20-nov | Pedro |
+| Retirar las afirmaciones sin medición: «en todos los tamaños medidos» y la comparación con `itertuples` | `F3/F3_eficiencia.ipynb` | Pendiente | Felipe |
+| La sección 7 dice «dos pares» y hay tres comparaciones | `F3/F3_Nucleo.ipynb` | Pendiente | Pedro |
+| Documentar qué se hace con los ausentes y cuántos quedan, y la decisión de no normalizar ni escalar | Tabla de transformaciones del informe y `docs/decisiones.md` | Pendiente | Cristián |
+| Declarar `Transformer` como clase abstracta con `abc` | `src/pipeline/transformers.py` | Pendiente | Pedro |
+| Referencia de `tracemalloc` en la bibliografía | Informe (ya está en `docs/arquitectura.md`) | Pendiente | Cristián |
+
+### Sugerencias del docente para el análisis, frente a las tres figuras propuestas
+
+| Sugerencia | ¿Está en el plan? | Qué hacer |
+|---|---|---|
+| Partir del pipeline ajustado con 2024 y aplicado a 2025, sin volver a procesar | Sí | Decirlo en la metodología |
+| Modalidad en 2024 y 2025 con barras al 100 %, en número de órdenes y en monto | Solo en monto | Figura 1 con dos paneles |
+| Más de un indicador de concentración: HHI y curva de Lorenz, con intervalos por *bootstrap* | No | La figura 3 pasa a ser la curva de Lorenz; HHI e intervalos en la tabla de hallazgos |
+| Rotación de proveedores: los diez mayores de 2024 concentran solo el 7,2 % en 2025 | No | Agregarlo como hallazgo, con una figura o una cifra |
+| Indicadores con y sin órdenes extremas | Sí | Se mantiene |
+| Montos comparables: UF o IPC, con la fuente del índice | No | Convertir antes de comparar montos entre años, o declararlo como límite si no alcanza |
+| «Coincide con» o «se asocia con», nunca «efecto de la ley» | Sí | Revisar el informe y el guion |
+| Proveedores personas naturales solo con su código en las figuras | Sí | Revisar las etiquetas |
+| Una tabla de hallazgos generada desde el notebook; informe y guion se escriben desde ella | Sí | `docs/hallazgos_f4.csv` |
+| Video en tres actos; cada integrante presenta lo que desarrolló; más figuras que código | Sí | Ajustar el guion a los tres actos |
+
+Lo mínimo que no puede faltar: las tres figuras, la tabla de hallazgos y el HHI. La curva de Lorenz, el *bootstrap* y la conversión a UF se hacen si el lunes en la noche las figuras base ya están.
+
+### Calendario nuevo
+
+| Cuándo | Qué | Quién |
+|---|---|---|
+| **Lun 23** | Ramas creadas y primer commit de cada uno. Figura 1 y tabla de hallazgos. F1 sin licitaciones | Los tres |
+| **Mar 24, mediodía** | Las tres figuras y los indicadores unidos a `main` por *pull request*. Pendientes de la Fase 3 cerrados | Felipe; Pedro |
+| **Mar 24, tarde** | Informe completo en borrador. Guion y láminas | Cristián; Pedro |
+| **Mar 24, noche** | Ensayo con cronómetro y grabación del video | Los tres |
+| **Mié 25, mañana** | Clon limpio y ejecución completa. Cada cifra del informe contra el notebook. Video subido a Canvas Studio | Pedro; los tres |
+| **Mié 25, 18:00** | PDF final. Etiqueta `entrega-s3`. Entrega antes de las 20:00 | Pedro |
 
 ## En corto
 
-- **Entrega:** domingo 22-nov, 23:59. Pondera 30 % (150 puntos, 26 criterios). Un solo intento; la sube Pedro.
+- **Entrega:** miércoles 25-nov, 23:59 (al escribir el plan era el domingo 22). Pondera 30 % (150 puntos, 26 criterios). Un solo intento; la sube Pedro.
 - **Cuatro productos que deben decir lo mismo:** informe PDF de hasta 10 páginas, notebooks que corran completos, repositorio con F1 a F4 y video de 5 a 8 minutos en Canvas Studio.
-- **Quedan dos días y medio.** El código de las fases 1 a 3 está en `main` y pasa (133 pruebas, 11 de 11 pasos). Lo que falta es casi todo comunicación: figuras, informe y video.
+- El código de las fases 1 a 3 está en `main` y pasa (133 pruebas, 11 de 11 pasos). Lo que falta es casi todo comunicación: figuras, informe y video.
 - **El historial es el riesgo que más se repite:** sin contar las uniones, `main` tiene 63 commits de Pedro, 11 de Felipe y 9 de Cristián. La Fase 4 la escriben Felipe y Cristián en sus ramas; Pedro integra y revisa.
 - **Antes de crear una rama:** `git checkout main` y `git pull`. `main` cambió el viernes 20.
 
@@ -93,7 +143,7 @@ Tres tipos distintos, en el orden contexto, contraste y resolución. Cada títul
 
 - **En el video:** metodología y reproducibilidad.
 
-## Calendario
+## Calendario original (reemplazado por el de la actualización)
 
 | Cuándo | Qué | Quién |
 |---|---|---|
