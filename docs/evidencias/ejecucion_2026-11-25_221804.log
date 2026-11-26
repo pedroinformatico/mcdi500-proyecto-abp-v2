@@ -1,0 +1,41 @@
+[22:18:04] Ejecución completa del proyecto · Python 3.14.6
+[22:18:04] == Entorno: scripts/check_environment.py
+[22:18:04]    Python 3.14.6 (ok)
+[22:18:04]      ok  numpy==2.5.4 (instalado: 2.5.4)
+[22:18:04]      ok  pandas==3.1.0 (instalado: 3.1.0)
+[22:18:04]      ok  matplotlib==3.11.2 (instalado: 3.11.2)
+[22:18:04]      ok  jupyterlab==4.6.5 (instalado: 4.6.5)
+[22:18:04]      ok  ipykernel==7.4.0 (instalado: 7.4.0)
+[22:18:04]      ok  nbconvert==7.17.2 (instalado: 7.17.2)
+[22:18:04]      ok  nbclient==0.11.0 (instalado: 0.11.0)
+[22:18:04]      ok  nbformat==5.11.1 (instalado: 5.11.1)
+[22:18:04]      ok  pytest==9.2.0 (instalado: 9.2.0)
+[22:18:04]    Entorno verificado: todas las dependencias coinciden.
+[22:18:04]    -> OK (0.1 s)
+[22:18:04] == Pruebas: -m pytest -q
+[22:18:28]    ........................................................................ [ 50%]
+[22:18:28]    ......................................................................   [100%]
+[22:18:28]    142 passed in 23.22s
+[22:18:28]    -> OK (24.1 s)
+[22:18:28] == Notebook F1/F1_Definición.ipynb
+[22:18:30]    -> OK: 3 celdas de código ejecutadas (1.6 s)
+[22:18:30] == Notebook F2/01_obtencion.ipynb
+[22:18:31]    -> OK: 5 celdas de código ejecutadas (1.3 s)
+[22:18:31] == Notebook F2/02_exploracion.ipynb
+[22:18:33]    -> OK: 13 celdas de código ejecutadas (2.4 s)
+[22:18:33] == Notebook F2/03_limpieza.ipynb
+[22:18:35]    -> OK: 6 celdas de código ejecutadas (1.8 s)
+[22:18:35] == Notebook F2/04_transformacion.ipynb
+[22:18:37]    -> OK: 8 celdas de código ejecutadas (1.7 s)
+[22:18:37] == Notebook F2/05_validacion.ipynb
+[22:18:38]    -> OK: 8 celdas de código ejecutadas (1.3 s)
+[22:18:38] == Notebook F3/F3_Nucleo.ipynb
+[22:18:41]    -> OK: 9 celdas de código ejecutadas (2.8 s)
+[22:18:41] == Notebook F3/F3_eficiencia.ipynb
+[22:18:48]    -> OK: 18 celdas de código ejecutadas (6.4 s)
+[22:18:48] == Notebook F3/F3_escalamiento.ipynb
+[22:19:05]    -> OK: 5 celdas de código ejecutadas (17.2 s)
+[22:19:05] == Notebook F4/F4_Comunicacion.ipynb
+[22:19:08]    -> OK: 7 celdas de código ejecutadas (2.9 s)
+
+[22:19:08] Resumen: 12/12 pasos correctos
