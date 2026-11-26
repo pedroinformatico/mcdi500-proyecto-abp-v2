@@ -97,7 +97,7 @@ def monto_por_proveedor_bucle(df: pd.DataFrame) -> pd.Series:
 
     iterrows convierte cada fila en un objeto Series de Python antes de
     entregarla al bucle: una asignación de memoria por fila.
-    Es el bucle más costoso posible en pandas.
+    Esta comparación solo evalúa este bucle frente a groupby.
     Solo para comparar. El pipeline real usa monto_por_proveedor_groupby.
     """
     acumulado: dict = {}
@@ -108,11 +108,11 @@ def monto_por_proveedor_bucle(df: pd.DataFrame) -> pd.Series:
 
 
 def monto_por_proveedor_groupby(df: pd.DataFrame) -> pd.Series:
-    """Versión del pipeline real: groupby + sum sobre arrays NumPy contiguos.
+    """Versión del pipeline real: groupby + sum.
 
-    Opera directamente sobre los arrays internos de pandas sin construir
-    objetos Python por fila. Contra iterrows: ~70× más rápido.
-    Contra itertuples (bucle bien escrito): ~4-5× más rápido.
+    Agrupa por columnas sin construir una Series de Python por cada fila.
+    Los factores de tiempo y memoria se informan con las mediciones ejecutadas,
+    no como propiedades constantes de esta implementación.
     """
     return df.groupby(["periodo", "CodigoProveedor"])["MontoTotalOC_PesosChilenos"].sum()
 
@@ -149,7 +149,8 @@ def classify_modality_select(df: pd.DataFrame) -> pd.Series:
 
     Evalúa las cuatro condiciones como máscaras NumPy sobre columnas completas
     y elige el resultado con np.select, sin construir objetos Python por fila.
-    16-19× más rápido que apply y usa ~1/3 de la memoria.
+    La ventaja de tiempo y memoria depende de los datos y del entorno de ejecución;
+    se cuantifica en los notebooks de eficiencia.
     """
     conditions = [
         df["EsCompraAgil"].fillna(False).astype(bool),
