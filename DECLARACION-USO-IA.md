@@ -51,4 +51,16 @@ Reglas:
 
 ### Felipe Contreras
 
-> Pendiente: completar con el formato.
+>### Felipe Contreras
+
+- **Para qué la usé:**
+  - Utilicé un asistente de IA generativa para contrastar mis tareas con la guía de la Sumativa 3 y la retroalimentación del profesor, delimitando el trabajo a visualizaciones y resultados de F4 y a la corrección de afirmaciones de eficiencia de F3.
+  - Generar el módulo `src/pipeline/comunicacion.py` y el notebook `F4/F4_Comunicacion.ipynb`: tablas y figuras de modalidades de compra, montos extremos y concentración de proveedores con y sin órdenes extremas, a partir de datos ya procesados y sin repetir la limpieza.
+  - Elaborar la tabla de dependencia entre unidad y proveedor y `docs/hallazgos_f4.csv`, y redactar las interpretaciones de las figuras con sus alcances y limitaciones. El apoyo incluyó la generación de código y texto, no solo sugerencias de formato.
+  - Escribir y ejecutar las pruebas de `tests/test_comunicacion.py`, ejecutar los notebooks y contrastar cifras con los datos procesados.
+  - Corregir `F3/F3_eficiencia.ipynb` y la documentación de `src/pipeline/medicion.py`: retirar la comparación no medida con `itertuples`, limitar las conclusiones al volumen evaluado y remitir al notebook de escalamiento para los tamaños crecientes. No desarrollé mediante este apoyo el núcleo orientado a objetos asignado a otro integrante.
+  - Preparar una minuta para mi segmento del video sobre las tres figuras y empaquetar los archivos de mi aporte para trasladarlos a otro repositorio.
+  - Incorporar, a solicitud de Cristián para el OE5 del informe, tres tablas de órdenes extremas por modalidad, rubro y unidad. El apoyo incluyó vincular el detalle de productos con las órdenes ya procesadas, documentar el prorrateo estimado del monto por rubro y probar que no se duplica el monto de las órdenes multirrubro.
+- **Qué hice yo:** proporcioné la guía, los comentarios del profesor y el reparto de tareas; delimité el alcance a mi responsabilidad como Felipe; solicité las correcciones de las afirmaciones sin medición y las revisiones de cumplimiento; y pedí una minuta centrada en los resultados para preparar mi exposición. No presento el código ni los textos generados con este apoyo como escritos íntegramente por mí.
+- **Cómo lo validé:** solicité al asistente comprobaciones ejecutables en el entorno local. El asistente ejecutó las 139 pruebas del proyecto antes de las últimas correcciones de texto y, después de ellas, 29 pruebas enfocadas en eficiencia, escalamiento y comunicación, todas satisfactorias. También ejecutó los notebooks de eficiencia, escalamiento y comunicación; verificó la equivalencia de las implementaciones antes de medir tiempo y memoria; y contrastó las cifras de extremos y concentración con el CSV procesado. Estas comprobaciones fueron ejecutadas por el asistente, no constituyen una revisión humana independiente ni certifican por sí solas el cumplimiento completo de la rúbrica. Al registrar esta declaración, quedan pendientes la revisión final del equipo, la integración mediante un pull request revisado y la grabación del video; si cambia la salida del pipeline, deben actualizarse y verificarse las figuras, los hallazgos y la minuta antes de entregar.
+ Pendiente: completar con el formato.
