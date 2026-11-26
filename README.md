@@ -100,6 +100,7 @@ jupyter lab
 | `F3/F3_Nucleo.ipynb` | Núcleo algorítmico: clases, pipeline, patrones de diseño y equivalencia con la F2 | `data/raw/` y `data/processed/` | Verificación |
 | `F3/F3_eficiencia.ipynb` | Eficiencia: tres pares de implementaciones medidos con `timeit` y `tracemalloc` | `data/raw/` | Mediciones |
 | `F3/F3_escalamiento.ipynb` | Las mismas comparaciones sobre tamaños crecientes | Datos sintéticos | Razón de tiempo por tamaño |
+| `F4/F4_Comunicacion.ipynb` | Visualizaciones y resultados: modalidades, montos extremos y concentración | `data/processed/ordenes.csv` | `F4/figuras/` y `docs/hallazgos_f4.csv` |
 
 ## Fase 3: núcleo algorítmico
 

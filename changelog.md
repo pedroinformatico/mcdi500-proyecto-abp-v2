@@ -17,6 +17,20 @@ La primera sección reúne las observaciones recibidas en las evaluaciones anter
 | El registro de ejecución no correspondía a la versión entregada | Sumativa 1 | Registro regenerado después de cada integración | `c94ecb8`, `82e1e5c`, `5f9fd79` | **Documentación:** cada entrega tiene su evidencia de ejecución completa |
 | El índice del informe no tenía números de página | Sumativa 1 | Índice con páginas desde el informe de la Sumativa 2 | Informe | **Documentación:** no cambia el repositorio |
 
+## [F4] 2026-11-25 · Comunicación y cierre de la Sumativa 3
+
+### Agregado
+- Módulo `src/pipeline/comunicacion.py` con sus pruebas, notebook `F4/F4_Comunicacion.ipynb` y las tres figuras de `F4/figuras/` (commits `f0f57cb` y `1221a37`).
+- Tabla única de hallazgos `docs/hallazgos_f4.csv` y composición de las órdenes de monto extremo por modalidad, rubro y unidad (commit `5161ad3`).
+- Dos decisiones de la Fase 4 en `docs/decisiones.md`: datos ausentes y copia interpretable sin normalizar ni escalar (commit `ce84c79`). Responde a la retroalimentación de la Sumativa 2.
+- Medición de eficiencia sobre tamaños crecientes: `escalamiento.py`, `scripts/measure_efficiency.py` y `F3/F3_escalamiento.ipynb` (commit `6871e69`). Responde a la retroalimentación de la Sumativa 2.
+
+### Cambiado
+- El notebook de F1 ya no menciona el conjunto de licitaciones, que el proyecto no procesa; alcance, restricciones y supuestos quedan en tres listas (commit `2f1ce21`). Responde a la retroalimentación de la Sumativa 1.
+- `Transformer` se declara como clase abstracta con `abc`: no se puede instanciar y cada paso debe implementar `_learn` y `_apply`.
+- `F3_eficiencia.ipynb` y `F3_Nucleo.ipynb`: se retiran las afirmaciones sin medición que las respalde y se corrige el número de comparaciones (tres). Responde a la retroalimentación de la Sumativa 2.
+- `F4/README.md` con el contenido de la fase.
+
 ## [F3] 2026-11-18 · Cierre de la Sumativa 2
 
 ### Agregado

@@ -17,6 +17,7 @@ anonimizacion.py. Así el código vive en una sola versión.
 
 from __future__ import annotations
 
+from abc import ABC, abstractmethod
 from collections.abc import Callable
 
 import pandas as pd
@@ -27,10 +28,10 @@ TOP_COLUMN = "proveedor_top"
 SUPPLIER_COLUMN = "CodigoProveedor"
 
 
-class Transformer:
-    """Clase base: lo que todos los pasos del pipeline comparten.
+class Transformer(ABC):
+    """Clase base abstracta: lo que todos los pasos del pipeline comparten.
 
-    No se usa directamente. Define el contrato (`fit` y `transform`) y controla el
+    No se puede instanciar directamente. Define el contrato (`fit` y `transform`) y controla el
     estado; cada clase hija solo dice qué aprende (`_learn`) y cómo lo aplica (`_apply`).
     """
 
@@ -87,9 +88,11 @@ class Transformer:
 
     # --- Lo que cada clase hija debe implementar ---
 
+    @abstractmethod
     def _learn(self, frame: pd.DataFrame) -> dict:
         raise NotImplementedError(f"{self.name} debe implementar _learn().")
 
+    @abstractmethod
     def _apply(self, frame: pd.DataFrame) -> pd.DataFrame:
         raise NotImplementedError(f"{self.name} debe implementar _apply().")
 
