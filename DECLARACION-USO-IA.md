@@ -28,14 +28,16 @@ Reglas:
 ### Cristián Cordero
 
 - **Para qué la usé:**
-  - Aprender el flujo de trabajo con Git y GitHub (ramas, commits y pull requests) usando Claude.
-  - Entender los requisitos de la guía y la rúbrica de la Sumativa 1.
+  - Aprender el flujo de trabajo con Git y GitHub (ramas, commits y pull requests).
+  - Entender los requisitos de la guía y la rúbrica de las sumativas 1 a 3.
   - Recibir sugerencias de claridad y formato sobre borradores que redacté yo.
   - Explorar las columnas de los datos de ChileCompra para evaluar qué preguntas se podían responder.
   - Buscar referencias y revisar su formato APA.
-- **Qué hice yo:** propuse la línea de análisis (concentración del gasto en pocos proveedores); redacté con mis palabras el contexto, la problemática y las preguntas del análisis; armé la lista de referencias; y subí mis cambios en ramas y pull requests propios.
-- **Cómo lo validé:** abrí las fuentes originales para comprobar las referencias (OCDE, Ley 21.634 y ChileCompra), contrasté las cifras del contexto con la documentación de los datos y revisé cada cambio en el diff antes de hacer el commit.
-
+  - Sumativa 3: proponer la redacción del notebook de F1 sin el conjunto de licitaciones, con alcance, restricciones y supuestos en tres listas.
+  - Sumativa 3: contar los datos ausentes de la fuente y del dataset procesado, y redactar las dos decisiones de la Fase 4 en `docs/decisiones.md`.
+  - Sumativa 3: preparar un primer borrador del informe y del guion del video a partir de la tabla de hallazgos.
+- **Qué hice yo:** propuse la línea de análisis (concentración del gasto en pocos proveedores); redacté con mis palabras el contexto, la problemática y las preguntas del análisis; armé la lista de referencias; en la Sumativa 3 revisé y ajusté cada cambio del notebook de F1, del registro de decisiones, del informe y del guion; y subí mis cambios en ramas y pull requests propios.
+- **Cómo lo validé:** abrí las fuentes originales para comprobar las referencias (OCDE, Ley 21.634 y ChileCompra), contrasté las cifras del contexto con la documentación de los datos, ejecuté el notebook de F1 completo, comparé cada cifra del informe y del guion con `docs/hallazgos_f4.csv` y revisé cada cambio en el diff antes de hacer el commit.
 
 ### Pedro Hernández
 
