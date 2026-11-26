@@ -105,3 +105,64 @@ def test_rejects_unprocessed_and_empty_inputs(orders, tmp_path):
         comunicacion.concentration_table(orders), empty, min_orders=len(orders) + 1,
     )
     assert (findings.loc[findings["indicador"] == "unidades_analizadas", "valor"] == 0).all()
+
+
+@pytest.fixture
+def extreme_detail_case(orders):
+    sample = orders.copy().reset_index(drop=True)
+    sample["monto_extremo"] = False
+    sample.loc[:1, "monto_extremo"] = True
+    sample.loc[:1, ordenes.AMOUNT_COLUMN] = [100.0, 300.0]
+    rows = []
+    for position, rubro, net in [(0, "A", 10.0), (0, "B", 30.0), (1, "A", 5.0), (1, "A", 15.0)]:
+        row = sample.iloc[position]
+        rows.append({"periodo": row["periodo"], "Codigo": row["Codigo"],
+                     "RubroN1": "General", "RubroN2": rubro,
+                     "monedaItem": "CLF" if position == 0 else "CLP", "totalLineaNeto": net})
+    return sample, pd.DataFrame(rows)
+
+
+def test_oe5_allocates_each_order_once_and_uses_total_denominator(extreme_detail_case):
+    sample, lines = extreme_detail_case
+    table = comunicacion.extreme_product_table(sample, lines, top=None).set_index("RubroN2")
+    assert table.loc["A", "monto_asignado_clp"] == pytest.approx(325)
+    assert table.loc["B", "monto_asignado_clp"] == pytest.approx(75)
+    assert table["monto_asignado_clp"].sum() == pytest.approx(400)
+    assert table.loc["A", "ordenes_con_rubro"] == 2
+    top = comunicacion.extreme_product_table(sample, lines, top=1)
+    assert top.iloc[0]["porcentaje_monto_extremo"] == pytest.approx(81.25)
+    tables = comunicacion.extreme_breakdown_tables(sample)
+    assert tables["modalidad"]["ordenes"].sum() == 2
+    assert tables["modalidad"]["monto_extremo_clp"].sum() == pytest.approx(400)
+    assert tables["modalidad"]["porcentaje_monto_extremo"].sum() == pytest.approx(100)
+    assert tables["unidad"]["monto_extremo_clp"].sum() == pytest.approx(400)
+
+
+def test_oe5_rejects_incomplete_or_incomparable_detail(extreme_detail_case):
+    sample, lines = extreme_detail_case
+    with pytest.raises(ValueError, match="Falta detalle"):
+        comunicacion.extreme_product_table(sample, lines.iloc[:2])
+    mixed = lines.copy()
+    mixed.loc[0, "monedaItem"] = "CLP"
+    with pytest.raises(ValueError, match="monedas distintas"):
+        comunicacion.extreme_product_table(sample, mixed)
+    zero = lines.copy()
+    zero.loc[:1, "totalLineaNeto"] = 0
+    with pytest.raises(ValueError, match="neto de líneas positivo"):
+        comunicacion.extreme_product_table(sample, zero)
+    sample["monto_extremo"] = False
+    with pytest.raises(ValueError, match="órdenes extremas"):
+        comunicacion.extreme_breakdown_tables(sample)
+
+
+def test_oe5_reads_only_selected_orders_with_source_encoding(extreme_detail_case, tmp_path):
+    sample, lines = extreme_detail_case
+    for period in comunicacion.PERIODS:
+        part = lines.loc[lines["periodo"].eq(period)].drop(columns="periodo").copy()
+        part["RubroN2"] = "Prótesis"
+        part["totalLineaNeto"] = part["totalLineaNeto"].astype(str).str.replace(".", ",", regex=False)
+        part.to_csv(tmp_path / f"oc_{period}_salud_valparaiso.csv", sep=";", encoding="latin-1", index=False)
+    loaded = comunicacion.read_extreme_product_lines(tmp_path, sample)
+    assert len(loaded) == 4
+    assert loaded["RubroN2"].eq("Prótesis").all()
+    assert loaded["totalLineaNeto"].sum() == pytest.approx(60)

@@ -3,6 +3,8 @@
 Todas las funciones reciben órdenes ya procesadas: una fila por orden, montos
 en pesos nominales y la marca de extremo calculada por el pipeline de F2.
 No limpian, reclasifican ni vuelven a ajustar el pipeline.
+Para OE5 se consulta además el detalle original de productos, restringido a las
+órdenes ya marcadas como extremas, sin modificar las órdenes procesadas.
 """
 
 from __future__ import annotations
@@ -14,7 +16,7 @@ import numpy as np
 import pandas as pd
 from matplotlib.figure import Figure
 
-from . import ordenes
+from . import chilecompra, ordenes
 
 AMOUNT = ordenes.AMOUNT_COLUMN
 PERIODS = ("2024-09", "2025-09")
@@ -248,6 +250,101 @@ def findings_table(modalities: pd.DataFrame, extremes: dict[str, float],
             ("unidades_top2_mayor_75pct", period, group, float((part["top2_pct"] > 75).sum()), "unidades"),
         ])
     return pd.DataFrame(records, columns=["indicador", "periodo", "grupo", "valor", "unidad"])
+
+
+def extreme_breakdown_tables(orders: pd.DataFrame) -> dict[str, pd.DataFrame]:
+    """OE5: modalidades completas y cinco unidades por monto extremo de ambos meses.
+
+    Todos los porcentajes usan el monto de todas las órdenes extremas como
+    denominador, no solo el monto de las cinco unidades mostradas.
+    """
+    validate_visual_input(orders)
+    extreme = orders.loc[orders["monto_extremo"]]
+    total = float(extreme[AMOUNT].sum())
+    if total <= 0:
+        raise ValueError("Se requieren órdenes extremas con monto total positivo.")
+    modalities = extreme.groupby("modalidad").agg(
+        ordenes=("Codigo", "size"), monto_extremo_clp=(AMOUNT, "sum")
+    ).reindex(MODALITIES, fill_value=0).reset_index()
+    units = extreme.groupby("CodigoUnidadCompra").agg(
+        unidad=("UnidadCompra", "first"), ordenes=("Codigo", "size"),
+        monto_extremo_clp=(AMOUNT, "sum"),
+    ).reset_index().sort_values(
+        ["monto_extremo_clp", "CodigoUnidadCompra"], ascending=[False, True]
+    ).head(5).reset_index(drop=True)
+    for table in (modalities, units):
+        table["porcentaje_monto_extremo"] = table["monto_extremo_clp"] / total * 100
+    return {"modalidad": modalities, "unidad": units}
+
+
+def read_extreme_product_lines(raw_dir: Path, orders: pd.DataFrame) -> pd.DataFrame:
+    """Lee solo rubros, netos y moneda de las líneas de las órdenes ya marcadas.
+
+    Enriquecimiento para OE5: no reconstruye órdenes ni cambia sus etiquetas,
+    montos, modalidades o marcas de extremo. No carga datos de proveedores.
+    """
+    validate_visual_input(orders)
+    columns = ["Codigo", "RubroN1", "RubroN2", "monedaItem", "totalLineaNeto"]
+    parts = []
+    for period in PERIODS:
+        path = Path(raw_dir) / f"oc_{period}_salud_valparaiso.csv"
+        part = pd.read_csv(path, sep=chilecompra.CSV_SEPARATOR,
+                           encoding=chilecompra.CSV_ENCODING, dtype=str,
+                           keep_default_na=False, usecols=columns)
+        codes = orders.loc[orders["monto_extremo"] & orders["periodo"].eq(period), "Codigo"]
+        part = part.loc[part["Codigo"].isin(codes)].copy()
+        part["periodo"] = period
+        part["totalLineaNeto"] = ordenes.parse_amount(part["totalLineaNeto"])
+        parts.append(part)
+    return pd.concat(parts, ignore_index=True)
+
+
+def extreme_product_table(orders: pd.DataFrame, lines: pd.DataFrame,
+                          top: int | None = 5) -> pd.DataFrame:
+    """Rubros N2 por monto bruto CLP asignado proporcionalmente al neto de líneas.
+
+    Conserva el monto procesado de cada orden: no suma el total repetido por
+    producto ni mezcla netos de monedas distintas dentro de una orden. Es una
+    asignación estimada de impuestos/cargos, no gasto exacto de cada rubro.
+    Una orden multirrubro cuenta en varios grupos: los conteos no son aditivos.
+    """
+    validate_visual_input(orders)
+    if top is not None and top < 1:
+        raise ValueError("top debe ser positivo o None.")
+    required = {"periodo", "Codigo", "RubroN1", "RubroN2", "monedaItem", "totalLineaNeto"}
+    if required.difference(lines.columns):
+        raise KeyError("Faltan columnas del detalle de productos para OE5.")
+    extreme = orders.loc[orders["monto_extremo"], ["periodo", "Codigo", AMOUNT]]
+    total = float(extreme[AMOUNT].sum())
+    if total <= 0:
+        raise ValueError("Se requieren órdenes extremas con monto total positivo.")
+    detail = lines.merge(extreme, on=["periodo", "Codigo"], how="inner", validate="many_to_one")
+    if detail["Codigo"].nunique() != len(extreme):
+        raise ValueError("Falta detalle de productos para alguna orden extrema.")
+    net = detail["totalLineaNeto"]
+    if not pd.api.types.is_numeric_dtype(net) or not np.isfinite(net).all() or (net < 0).any():
+        raise ValueError("Los netos de líneas deben ser numéricos, finitos y no negativos.")
+    currency = detail["monedaItem"].astype("string").str.strip()
+    if currency.isna().any() or currency.isin(["", "NA"]).any():
+        raise ValueError("Falta la moneda de alguna línea extrema.")
+    detail["monedaItem"] = currency
+    if (detail.groupby("Codigo")["monedaItem"].nunique() != 1).any():
+        raise ValueError("No se pueden prorratear líneas con monedas distintas en una orden.")
+    totals = detail.groupby("Codigo")["totalLineaNeto"].transform("sum")
+    if (totals <= 0).any():
+        raise ValueError("Cada orden extrema debe tener un neto de líneas positivo.")
+    detail["monto_asignado_clp"] = detail[AMOUNT] * net / totals
+    for column in ("RubroN1", "RubroN2"):
+        detail[column] = detail[column].astype("string").str.strip().replace(
+            {"": "Sin rubro informado", "NA": "Sin rubro informado"}
+        ).fillna("Sin rubro informado")
+    result = detail.groupby(["RubroN1", "RubroN2"]).agg(
+        ordenes_con_rubro=("Codigo", "nunique"), monto_asignado_clp=("monto_asignado_clp", "sum")
+    ).reset_index().sort_values(
+        ["monto_asignado_clp", "RubroN1", "RubroN2"], ascending=[False, True, True]
+    ).reset_index(drop=True)
+    result["porcentaje_monto_extremo"] = result["monto_asignado_clp"] / total * 100
+    return result if top is None else result.head(top).copy()
 
 
 def save_figure(fig: Figure, path: Path) -> None:
