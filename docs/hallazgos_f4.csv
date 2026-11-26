@@ -1,0 +1,56 @@
+indicador,periodo,grupo,valor,unidad
+ordenes_modalidad,2024-09,Compra ágil,1768.00000000,órdenes
+participacion_ordenes_modalidad,2024-09,Compra ágil,38.45150065,%
+monto_modalidad,2024-09,Compra ágil,1280569694.33858538,CLP nominales
+participacion_monto_modalidad,2024-09,Compra ágil,6.07315966,%
+ordenes_modalidad,2024-09,Trato directo,849.00000000,órdenes
+participacion_ordenes_modalidad,2024-09,Trato directo,18.46454980,%
+monto_modalidad,2024-09,Trato directo,5401358388.49048710,CLP nominales
+participacion_monto_modalidad,2024-09,Trato directo,25.61618629,%
+ordenes_modalidad,2024-09,Convenio marco,275.00000000,órdenes
+participacion_ordenes_modalidad,2024-09,Convenio marco,5.98086124,%
+monto_modalidad,2024-09,Convenio marco,1283278513.15000010,CLP nominales
+participacion_monto_modalidad,2024-09,Convenio marco,6.08600635,%
+ordenes_modalidad,2024-09,Licitación,1627.00000000,órdenes
+participacion_ordenes_modalidad,2024-09,Licitación,35.38494998,%
+monto_modalidad,2024-09,Licitación,12538335182.34020424,CLP nominales
+participacion_monto_modalidad,2024-09,Licitación,59.46362133,%
+ordenes_modalidad,2024-09,Otra,79.00000000,órdenes
+participacion_ordenes_modalidad,2024-09,Otra,1.71813832,%
+monto_modalidad,2024-09,Otra,582182405.54100001,CLP nominales
+participacion_monto_modalidad,2024-09,Otra,2.76102637,%
+ordenes_modalidad,2025-09,Compra ágil,2423.00000000,órdenes
+participacion_ordenes_modalidad,2025-09,Compra ágil,42.60594338,%
+monto_modalidad,2025-09,Compra ágil,3302950908.04783630,CLP nominales
+participacion_monto_modalidad,2025-09,Compra ágil,11.76365831,%
+ordenes_modalidad,2025-09,Trato directo,774.00000000,órdenes
+participacion_ordenes_modalidad,2025-09,Trato directo,13.60998769,%
+monto_modalidad,2025-09,Trato directo,5953431703.18772984,CLP nominales
+participacion_monto_modalidad,2025-09,Trato directo,21.20350507,%
+ordenes_modalidad,2025-09,Convenio marco,430.00000000,órdenes
+participacion_ordenes_modalidad,2025-09,Convenio marco,7.56110427,%
+monto_modalidad,2025-09,Convenio marco,2111072795.73926520,CLP nominales
+participacion_monto_modalidad,2025-09,Convenio marco,7.51871273,%
+ordenes_modalidad,2025-09,Licitación,1967.00000000,órdenes
+participacion_ordenes_modalidad,2025-09,Licitación,34.58765606,%
+monto_modalidad,2025-09,Licitación,12155384253.09068489,CLP nominales
+participacion_monto_modalidad,2025-09,Licitación,43.29213207,%
+ordenes_modalidad,2025-09,Otra,93.00000000,órdenes
+participacion_ordenes_modalidad,2025-09,Otra,1.63530860,%
+monto_modalidad,2025-09,Otra,4554743196.70913696,CLP nominales
+participacion_monto_modalidad,2025-09,Otra,16.22199183,%
+extremos_ordenes,Ambos,Todas,10285.00000000,órdenes
+extremos_extremas,Ambos,Todas,84.00000000,órdenes
+extremos_porcentaje_ordenes,Ambos,Todas,0.81672338,%
+extremos_porcentaje_monto,Ambos,Todas,33.53343132,%
+extremos_limite_pesos,Ambos,Todas,74012533.27794953,CLP nominales
+participacion_top10,2024-09,Todas,22.20243131,%
+participacion_top10,2024-09,Sin extremas,16.13114137,%
+participacion_top10,2025-09,Todas,26.03410714,%
+participacion_top10,2025-09,Sin extremas,15.38193570,%
+unidades_analizadas,2024-09,mínimo 20 órdenes,35.00000000,unidades
+unidades_top1_mayor_50pct,2024-09,mínimo 20 órdenes,1.00000000,unidades
+unidades_top2_mayor_75pct,2024-09,mínimo 20 órdenes,1.00000000,unidades
+unidades_analizadas,2025-09,mínimo 20 órdenes,36.00000000,unidades
+unidades_top1_mayor_50pct,2025-09,mínimo 20 órdenes,4.00000000,unidades
+unidades_top2_mayor_75pct,2025-09,mínimo 20 órdenes,4.00000000,unidades
